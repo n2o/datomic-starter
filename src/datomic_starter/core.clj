@@ -75,6 +75,15 @@
   (<!! (client/q conn {:query all-data-from-1985 :args [db]})))
 
 
+;; -----------------------------------------------------------------------------
+;; Transactions
+
+(def commando-id
+  (ffirst (<!! (client/q conn {:query '[:find ?e
+                                        :where [?e :movie/title "Commando"]]
+                               :args [db]}))))
+
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
