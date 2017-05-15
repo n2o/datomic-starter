@@ -83,6 +83,20 @@
                                         :where [?e :movie/title "Commando"]]
                                :args [db]}))))
 
+(comment
+  (<!! (client/transact conn {:tx-data [{:db/id commando-id
+                                         :movie/genre "future governor"}]})))
+
+(comment
+  (def db (client/db conn))
+  (def old-db (client/as-of db 1004))
+  (def hdb (client/history db))
+
+  (<!! (client/q conn {:query '[:find ?genre
+                                :where
+                                [?e :movie/title "Commando"]
+                                [?e :movie/genre ?genre]]
+                       :args [hdb]})))
 
 (defn -main
   "I don't do a whole lot ... yet."
